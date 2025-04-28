@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography, IconButton } from '@mui/material';   // Importing IconButton
+import { Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ViewRecipe = () => {
@@ -20,7 +20,6 @@ const ViewRecipe = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  // Fetch order data
   useEffect(() => {
     axios.get(`http://127.0.0.1:5000/api/recipes/${recipe_id}`)
       .then((response) => {
@@ -29,34 +28,30 @@ const ViewRecipe = () => {
       .catch((error) => console.error('Error fetching order:', error));
   }, [recipe_id]);
 
-  // Fetch recipes and match with current order
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/api/recipes");
         const allRecipes = response.data;
         setRecipes(allRecipes);
-        console.log("recipes :", allRecipes)
 
-        // Match recipe_id from order
         const matched = allRecipes.find(r => r.recipe_id === Number(order.recipe_id));
         setSelectedRecipe(matched || null);
-
       } catch (error) {
         console.error("Error fetching recipes:", error);
       }
     };
     fetchRecipes();
-  }, [order.recipe_id]); // Re-run if recipe_id changes
+  }, [order.recipe_id]);
 
   return (
     <div className="container mx-auto p-6">
-     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h4" gutterBottom>
           View Recipe
         </Typography>
         <IconButton
-          onClick={() => navigate(-1)}  // Navigate to the previous page
+          onClick={() => navigate(-1)}
           sx={{
             border: '1px solid red',
             borderRadius: '50%',
@@ -70,8 +65,6 @@ const ViewRecipe = () => {
       </Box>
       <div className="space-y-4">
 
-
-        {/* Render Recipe Details if Found */}
         {selectedRecipe && (
           <div className="mt-6 p-4 border rounded bg-gray-50">
             <h2 className="text-xl font-semibold mb-2">Recipe Details</h2>

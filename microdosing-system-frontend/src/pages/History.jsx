@@ -18,7 +18,6 @@ const History = () => {
         setLoading(false);
       }
     };
-
     fetchFromLocalStorage();
   }, []);
 

@@ -23,7 +23,6 @@ const RecipeMaterialsTable = () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/api/recipes");
         console.log("Fetched Recipes:", response.data);
-        // Adjust if API returns an object
         setRecipes(Array.isArray(response.data) ? response.data : response.data.recipes || []);
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -34,7 +33,6 @@ const RecipeMaterialsTable = () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/api/materials");
         console.log("Fetched Materials:", response.data);
-        // Adjust if API returns an object
         setMaterials(Array.isArray(response.data) ? response.data : response.data.materials || []);
       } catch (error) {
         console.error("Error fetching materials:", error);
@@ -50,7 +48,6 @@ const RecipeMaterialsTable = () => {
         console.error("Error fetching recipe materials:", error);
       }
     };
-
     fetchRecipes();
     fetchMaterials();
     fetchRecipeMaterials();

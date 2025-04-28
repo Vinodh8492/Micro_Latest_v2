@@ -9,10 +9,10 @@ const CreateBatch = () => {
   const [formData, setFormData] = useState({
     batch_number: '',
     order_id: '',
-    operator_id: '1',  // Fixed Operator ID
+    operator_id: '1',
     status: 'released',
     notes: '',
-    start_time: '',  // Added start_time field
+    start_time: '',
   });
 
   const [orders, setOrders] = useState([]);
@@ -22,7 +22,6 @@ const CreateBatch = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:5000/api/production_orders?operator_id=1`);
-        // Expecting an array of order_id only
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -31,7 +30,6 @@ const CreateBatch = () => {
         setLoading(false);
       }
     };
-
     fetchOrders();
   }, []);
 
@@ -50,7 +48,7 @@ const CreateBatch = () => {
         icon: 'success'
       }).then(() => navigate('/batches'));
     } catch (error) {
-      console.error('Error creating batch:', error);
+      console.log(`Error creating batch: ${error}`);
       const errorMessage = error.response?.data?.error || 'Failed to create batch';
       Swal.fire('Error!', errorMessage, 'error');
     }
@@ -107,8 +105,6 @@ const CreateBatch = () => {
               <option value="released">Released</option>
             </select>
           </div>
-
-          
 
           <div>
             <label className="block text-sm font-medium mb-1">Notes</label>

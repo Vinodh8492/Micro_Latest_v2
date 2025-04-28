@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Box, Typography, Button, Stack, Divider, TextField,
+  Box, Typography, Button, Stack, TextField,
   Paper, Chip, Grid, InputAdornment
 } from '@mui/material';
 import { CheckCircle, AlternateEmail, Send, Add } from '@mui/icons-material';
@@ -97,7 +97,7 @@ export default function SMTPSettings() {
               />
             </Grid>
           ))}
-          <Grid gridsize={{ xs: 12}}>
+          <Grid gridsize={{ xs: 12 }}>
             <Button
               onClick={addProfile}
               variant="contained"
@@ -134,9 +134,9 @@ export default function SMTPSettings() {
               color: 'white',
               borderRadius: 2,
               boxShadow: 3,
-              whiteSpace: 'nowrap',       // Prevents wrapping
-              textTransform: 'none',      // Keeps normal casing
-              fontSize: '1rem',           // Optional: tweak to fit
+              whiteSpace: 'nowrap',
+              textTransform: 'none',
+              fontSize: '1rem',
               '&:hover': {
                 background: 'linear-gradient(to right, #ff7043, #f4511e)',
               },
@@ -145,9 +145,9 @@ export default function SMTPSettings() {
             Send Test Email
           </Button>
 
-
         </Stack>
       </Paper>
+      
     </Box>
   );
 }

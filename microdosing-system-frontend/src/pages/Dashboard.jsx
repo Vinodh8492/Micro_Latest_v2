@@ -14,7 +14,6 @@ import {
   ArcElement
 } from 'chart.js';
 import { Bar, Doughnut, Line, Radar } from 'react-chartjs-2';
-
 import { Package, ClipboardList, Activity, CheckCircle } from 'lucide-react';
 import { Card, CardContent, Typography, CircularProgress, Box } from '@mui/material';
 import ThemeDropdown from '../components/ThemeDropdown';
@@ -32,8 +31,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler,             // ✅ Needed for "fill" to work in Line charts
-  RadialLinearScale   // ✅ Needed for Radar chart to work
+  Filler,
+  RadialLinearScale
 );
 
 const lightenColor = (color, percent) => {
@@ -57,7 +56,6 @@ const Dashboard = () => {
   const location = useLocation();
   const successMessage = location.state?.message;
   const barChartRef = useRef(null);
-  const pieChartRef = useRef(null);
   const historicalChartRef = useRef(null);
   const { themeColor } = useTheme();
   const [isDarkMode, setIsDarkMode] = useState(document.body.classList.contains('dark-mode'));
@@ -93,9 +91,7 @@ const Dashboard = () => {
         ]);
         const materials = materialRes.data;
         const recipes = recipesRes.data;
-
         setStats(prev => ({ ...prev, materials: materials.length, recipes: recipes.length }));
-
         const dynamicLabels = materials.map(m => m.title);
         const dynamicData = materials.map(m => m.current_quantity || 0);
         setProductChart({ labels: dynamicLabels, data: dynamicData });
@@ -115,7 +111,6 @@ const Dashboard = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const barColors = generateShades(themeColor, 5);
   const pieColors = Array(productChart.data.length)
     .fill()
     .map((_, index) => lightenColor(themeColor, 40 - (index * (40 / productChart.data.length))));
@@ -202,10 +197,8 @@ const Dashboard = () => {
         })}
       </Box>
 
-      {/* Bar + Pie (Doughnut) Charts */}
       <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        {/* Product Distribution (Bar Chart) */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">Material Distribution</Typography>
@@ -228,8 +221,8 @@ const Dashboard = () => {
                       borderRadius: 8,
                       backgroundColor: (context) => {
                         const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
-                        gradient.addColorStop(0, themeColor);                      // Start with theme color
-                        gradient.addColorStop(1, lightenColor(themeColor, 50));    // End with a lighter (but solid) theme color
+                        gradient.addColorStop(0, themeColor);
+                        gradient.addColorStop(1, lightenColor(themeColor, 50));
                         return gradient;
                       },
 
@@ -251,7 +244,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* By Product (Doughnut Chart) */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">By Material</Typography>
@@ -273,7 +265,6 @@ const Dashboard = () => {
                   plugins: {
                     legend: { display: false },
                     tooltip: { enabled: true },
-                    // THIS is just data, no drawing here
                     doughnutCenterText: {
                       text: `Total Materials ${stats.materials}`,
                       color: getContrastColor(themeColor)
@@ -292,19 +283,15 @@ const Dashboard = () => {
                     const { text } = chart.options.plugins.doughnutCenterText;
                     const textX = Math.round((width - ctx.measureText(text).width) / 2);
                     const textY = height / 2;
-
-                    // 👉 Dynamically detect theme and set text color
                     const themeIsDark = document.body.classList.contains('dark-mode');
                     ctx.fillStyle = themeIsDark ? '#ffffff' : '#000000';
-
                     ctx.fillText(text, textX, textY);
                     ctx.save();
                   }
                 }]}
-
               />
             </Box>
-            {/* Custom Legend */}
+
             <div className="grid grid-cols-2 gap-2 mt-6 text-sm">
               {productChart.labels.map((label, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -314,14 +301,10 @@ const Dashboard = () => {
               ))}
             </div>
 
-
           </CardContent>
         </Card>
-
       </Box>
 
-
-      {/* Historical KPI + Statistics Line Charts */}
       <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         {/* Tolerance Historical KPI */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
@@ -333,7 +316,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Statistics Line Chart */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">Statistics</Typography>
@@ -350,9 +332,7 @@ const Dashboard = () => {
         </Card>
       </Box>
 
-      {/* New four charts section */}
       <Box className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        {/* Performance Radar Chart */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">Performance</Typography>
@@ -368,7 +348,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Activity Line Chart */}
         <Card style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">Activity (Last 3 Days)</Typography>
@@ -383,7 +362,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Yearly Expense Bar Chart */}
         <Card className="col-span-2" style={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', color: isDarkMode ? '#e0f7ff' : '#000' }}>
           <CardContent>
             <Typography variant="h6" className="mb-4">Yearly Expense</Typography>

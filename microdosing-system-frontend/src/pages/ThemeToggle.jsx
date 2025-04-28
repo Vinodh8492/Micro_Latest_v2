@@ -6,7 +6,7 @@ const ThemeToggle = () => {
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
-  
+
     if (theme === "dark") {
       root.classList.add("dark-mode");
       root.classList.remove("light-mode");
@@ -18,10 +18,8 @@ const ThemeToggle = () => {
       body.classList.add("light-mode");
       body.classList.remove("dark-mode");
     }
-  
     localStorage.setItem("theme", theme);
   }, [theme]);
-  
 
   return (
     <button

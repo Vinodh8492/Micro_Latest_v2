@@ -27,7 +27,7 @@ const MaterialForm = () => {
     unit_of_measure: "",
     current_quantity: 0,
     minimum_quantity: 0,
-    maximum_quantity: 100, // Always set maximum quantity to 100
+    maximum_quantity: 100,
     plant_area_location: "",
     barcode_id: "",
     status: "Unreleased",
@@ -47,7 +47,6 @@ const MaterialForm = () => {
 
     const randomNum = Math.floor(Math.random() * 9000000000000) + 1000000000000;
     const barcodeId = randomNum.toString();
-
     const canvas = document.createElement("canvas");
     try {
       JsBarcode(canvas, barcodeId, {
@@ -76,7 +75,6 @@ const MaterialForm = () => {
     const { name, value } = e.target;
 
     if (name === "current_quantity" && value > material.maximum_quantity) {
-      // Prevent setting current_quantity higher than maximum_quantity (100)
       setErrors({
         ...errors,
         current_quantity: "Current quantity cannot exceed maximum quantity",
@@ -85,10 +83,9 @@ const MaterialForm = () => {
     } else {
       setErrors({
         ...errors,
-        current_quantity: "", // Reset the error if value is valid
+        current_quantity: "",
       });
     }
-
     setMaterial({ ...material, [name]: value });
   };
 
@@ -96,7 +93,6 @@ const MaterialForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://127.0.0.1:5000/api/materials", material);
-     
 
       Swal.fire({
         icon: "success",
@@ -141,7 +137,6 @@ const MaterialForm = () => {
         </Box>
 
         <form onSubmit={handleSubmit}>
-          {/* Basic Information */}
           <Typography variant="h6" gutterBottom>
             Basic Information
           </Typography>
@@ -200,12 +195,11 @@ const MaterialForm = () => {
             </Grid>
           </Grid>
 
-          {/* Quantity Information */}
           <Typography variant="h6" mt={4} gutterBottom>
             Quantity Information
           </Typography>
           <Grid container spacing={2}>
-          <Grid gridsize={{ xs: 12, md: 4 }}>
+            <Grid gridsize={{ xs: 12, md: 4 }}>
               <TextField
                 fullWidth
                 required
@@ -230,20 +224,19 @@ const MaterialForm = () => {
               />
             </Grid>
             <Grid gridsize={{ xs: 12, md: 4 }}>
-  <TextField
-    fullWidth
-    required
-    type="number"
-    label="Maximum Quantity"
-    name="maximum_quantity"
-    value={100}  // Always set value to 100
-    onChange={handleChange}  // This can still be used if you want to handle other logic
-  />
-</Grid>
+              <TextField
+                fullWidth
+                required
+                type="number"
+                label="Maximum Quantity"
+                name="maximum_quantity"
+                value={100}
+                onChange={handleChange}
+              />
+            </Grid>
           </Grid>
 
-           {/* Status */}
-           <Typography variant="h6" mt={4} gutterBottom>
+          <Typography variant="h6" mt={4} gutterBottom>
             Status
           </Typography>
           <Grid container spacing={2}>
@@ -263,8 +256,6 @@ const MaterialForm = () => {
             </Grid>
           </Grid>
 
-
-          {/* Barcode */}
           <Typography variant="h6" mt={4} gutterBottom>
             Barcode Information
           </Typography>
@@ -292,8 +283,6 @@ const MaterialForm = () => {
             </Grid>
           </Grid>
 
-         
-          {/* Actions */}
           <Box
             sx={{ mt: 4, display: "flex", gap: 2, justifyContent: "flex-end" }}
           >

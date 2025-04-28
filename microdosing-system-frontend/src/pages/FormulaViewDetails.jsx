@@ -27,7 +27,6 @@ const FormulaViewDetails = () => {
     no_of_materials: 0,
     materials: []
   });
-
   const [materialNames, setMaterialNames] = useState({});
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const FormulaViewDetails = () => {
     };
     fetchRecipeData();
   }, [recipe_id]);
-console.log(recipe)
+
   return (
     <Paper elevation={3} sx={{ maxWidth: 900, margin: "auto", mt: 4, p: 3 }}>
       <Typography variant="h6" align="center" gutterBottom>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Typography, Button, Stack, TextField, Switch, FormControlLabel,
+  Typography, Button, Stack, TextField, Switch, FormControlLabel,
   FormGroup, Checkbox, Paper, Divider
 } from '@mui/material';
 import { Settings, Email } from '@mui/icons-material';
@@ -101,7 +101,6 @@ export default function ReportScheduler() {
       </Stack>
 
       <Divider sx={{ my: 3 }} />
-
       <Typography variant="subtitle1" fontWeight={600} gutterBottom>
         What to include in the report:
       </Typography>

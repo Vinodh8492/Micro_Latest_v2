@@ -23,10 +23,8 @@ const MaterialTransactionForm = () => {
     quantity: "",
     description: "",
   });
-
   const navigate = useNavigate();
 
-  // Fetch materials for dropdown
   useEffect(() => {
     axios
       .get("http://127.0.0.1:5000/api/materials/all")
@@ -36,7 +34,7 @@ const MaterialTransactionForm = () => {
           setMaterials(data);
         } else {
           alert(`Fetched materials are not an array: ${data}`);
-          setMaterials([]); // Safe fallback
+          setMaterials([]);
         }
       })
       .catch((error) => {
@@ -141,7 +139,6 @@ const MaterialTransactionForm = () => {
       }
 
       await axios.post("http://127.0.0.1:5000/api/material-transactions", transaction);
-
       navigate("/material");
     } catch (error) {
       alert(`Error handling transaction: ${error}`);
@@ -192,45 +189,45 @@ const MaterialTransactionForm = () => {
           <FormControl fullWidth margin="normal" required>
             <InputLabel id="material-label">Material</InputLabel>
             <Select
-        labelId="material-label"
-        name="material_id"
-        value={transaction.material_id}
-        onChange={handleChange}
-        open={materialSelectOpen}
-        onOpen={handleMaterialSelectOpen}
-        onClose={handleMaterialSelectClose}
-      >
-        <MenuItem value="">
-          <em>Select a material</em>
-        </MenuItem>
-        {Array.isArray(materials) && materials.length > 0 ? (
-          materials.map((mat) => (
-            <MenuItem key={mat.material_id} value={mat.material_id}>
-              {mat.title}
-            </MenuItem>
-          ))
-        ) : (
-          <MenuItem disabled value="">
-            No materials found
-          </MenuItem>
-        )}
-      </Select>
+              labelId="material-label"
+              name="material_id"
+              value={transaction.material_id}
+              onChange={handleChange}
+              open={materialSelectOpen}
+              onOpen={handleMaterialSelectOpen}
+              onClose={handleMaterialSelectClose}
+            >
+              <MenuItem value="">
+                <em>Select a material</em>
+              </MenuItem>
+              {Array.isArray(materials) && materials.length > 0 ? (
+                materials.map((mat) => (
+                  <MenuItem key={mat.material_id} value={mat.material_id}>
+                    {mat.title}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled value="">
+                  No materials found
+                </MenuItem>
+              )}
+            </Select>
           </FormControl>
 
           <FormControl fullWidth margin="normal" required>
             <InputLabel id="transaction-type-label">Transaction Type</InputLabel>
             <Select
-        labelId="transaction-type-label"
-        name="transaction_type"
-        value={transaction.transaction_type}
-        onChange={handleChange}
-        open={transactionTypeSelectOpen}
-        onOpen={handleTransactionTypeSelectOpen}
-        onClose={handleTransactionTypeSelectClose}
-      >
-        <MenuItem value="addition">Addition</MenuItem>
-        <MenuItem value="removal">Removal</MenuItem>
-      </Select>
+              labelId="transaction-type-label"
+              name="transaction_type"
+              value={transaction.transaction_type}
+              onChange={handleChange}
+              open={transactionTypeSelectOpen}
+              onOpen={handleTransactionTypeSelectOpen}
+              onClose={handleTransactionTypeSelectClose}
+            >
+              <MenuItem value="addition">Addition</MenuItem>
+              <MenuItem value="removal">Removal</MenuItem>
+            </Select>
           </FormControl>
 
           <TextField

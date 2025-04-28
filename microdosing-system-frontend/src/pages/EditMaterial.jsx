@@ -12,20 +12,19 @@ import {
   Autocomplete,
   Stack,
 } from "@mui/material";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const EditMaterial = () => {
   const { material_id } = useParams();
   const navigate = useNavigate();
-
+  
   const [material, setMaterial] = useState({
     title: "",
     description: "",
     unit_of_measure: "",
     plant_area_location: "",
   });
-  const [initialMaterial, setInitialMaterial] = useState(null); // for reset
+  const [initialMaterial, setInitialMaterial] = useState(null);
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
@@ -33,10 +32,11 @@ const EditMaterial = () => {
       .get(`http://127.0.0.1:5000/api/materials/${material_id}`)
       .then((response) => {
         setMaterial(response.data);
-        setInitialMaterial(response.data); // save for reset
+        setInitialMaterial(response.data);
       })
       .catch((error) => alert(`Error fetching material: ${error}`));
   }, [material_id]);
+
   useEffect(() => {
     axios
       .get("http://127.0.0.1:5000/api/materials/all")
@@ -70,6 +70,7 @@ const EditMaterial = () => {
       Swal.fire("Error!", "Failed to update material.", "error");
     }
   };
+
   const handleCancel = () => {
     if (initialMaterial) {
       setMaterial({
@@ -132,9 +133,9 @@ const EditMaterial = () => {
             onChange={handleChange}
             fullWidth
             required
-            sx={{marginBottom:"10px"}}
+            sx={{ marginBottom: "10px" }}
           />
-           
+
           <Autocomplete
             options={locations}
             value={material.plant_area_location || ""}
@@ -162,7 +163,7 @@ const EditMaterial = () => {
             <Button
               variant="outlined"
               onClick={() => navigate(-1)}
-              sx={{ borderColor: "#4B5563", color: "#4B5563" }} // Custom gray color
+              sx={{ borderColor: "#4B5563", color: "#4B5563" }}
             >
               Back
             </Button>

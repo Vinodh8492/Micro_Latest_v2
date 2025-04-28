@@ -180,7 +180,7 @@ const Orders = () => {
       JsBarcode(canvas, barcodeId, { format: 'CODE128', width: 2, height: 50, displayValue: true });
       setBarcodeImage(canvas.toDataURL());
     } catch (error) {
-      alert(`Error generating barcode: ${error}`);
+      console.log(`Error generating barcode: ${error}`);
     }
   };
 
@@ -203,9 +203,6 @@ const Orders = () => {
         <Typography variant="h4">Production Orders</Typography>
         <Box display="flex" gap={2}>
           <Button variant="contained" onClick={openDialog}>Create Order</Button>
-          <Button variant="contained" style={{ backgroundColor: '#16a34a' }} onClick={() => navigate("/material-transactions")}>
-            ➕ Add Material Transaction
-          </Button>
         </Box>
       </Box>
 

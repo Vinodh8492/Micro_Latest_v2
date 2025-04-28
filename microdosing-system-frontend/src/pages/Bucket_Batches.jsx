@@ -13,20 +13,19 @@ const Bucket_Batches = () => {
   const [loading, setLoading] = useState(true);
   const barcodeRefs = useRef({});
   const navigate = useNavigate();
-
   const [materials, setMaterials] = useState([]);
 
-useEffect(() => {
-  const fetchMaterials = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:5000/api/materials/all');
-      setMaterials(response.data);
-    } catch (error) {
-      alert(`Error fetching materials: ${error}`);
-    }
-  };
-  fetchMaterials();
-}, []);
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/api/materials/all');
+        setMaterials(response.data);
+      } catch (error) {
+        alert(`Error fetching materials: ${error}`);
+      }
+    };
+    fetchMaterials();
+  }, []);
 
   useEffect(() => {
     const fetchBuckets = async () => {
@@ -84,37 +83,34 @@ useEffect(() => {
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",customClass: {
-        popup: 'relative', // for positioning
+      confirmButtonText: "Yes, delete it!", customClass: {
+        popup: 'relative',
       },
       didOpen: () => {
         const swal = Swal.getPopup();
-    
-        // Create the close icon (cross icon)
+
         const closeBtn = document.createElement('button');
         closeBtn.innerHTML = '&times;';
         closeBtn.style.position = 'absolute';
         closeBtn.style.top = '10px';
         closeBtn.style.right = '10px';
-        closeBtn.style.background = '#fff'; // White background
-        closeBtn.style.color = '#f44336'; // Red color for the cross
-        closeBtn.style.border = '2px solid #f44336'; // Red border
-        closeBtn.style.borderRadius = '50%'; // Round corners
+        closeBtn.style.background = '#fff';
+        closeBtn.style.color = '#f44336';
+        closeBtn.style.border = '2px solid #f44336';
+        closeBtn.style.borderRadius = '50%';
         closeBtn.style.width = '30px';
         closeBtn.style.height = '30px';
         closeBtn.style.cursor = 'pointer';
         closeBtn.style.fontSize = '18px';
-        closeBtn.style.lineHeight = '0'; // To ensure the cross is centered vertically
+        closeBtn.style.lineHeight = '0';
         closeBtn.style.display = 'flex';
-        closeBtn.style.justifyContent = 'center'; // Centers horizontally
+        closeBtn.style.justifyContent = 'center';
         closeBtn.style.alignItems = 'center';
-    
-        // Add cancel functionality to the cross icon
+
         closeBtn.onclick = () => {
-          Swal.close(); // Close the modal on click
+          Swal.close();
         };
-    
-        // Append the close button to the Swal popup
+
         swal.appendChild(closeBtn);
       }
     }).then(async (result) => {
@@ -132,14 +128,14 @@ useEffect(() => {
 
   const handleEdit = async (bucket) => {
     const uniqueLocationIds = [...new Set(materials.map(b => b.plant_area_location))];
-  
+
     const locationOptions = uniqueLocationIds.map((id) => {
       const selected = String(id) === String(bucket.location_id) ? 'selected' : '';
       return `<option value="${id}" ${selected}>${id}</option>`;
     }).join('');
-  
+
     const container = document.createElement('div');
-  
+
     const form = document.createElement('div');
     form.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 15px; padding: 20px; width: 100%; box-sizing: border-box;">
@@ -159,7 +155,7 @@ useEffect(() => {
       </div>
     `;
     container.appendChild(form);
-  
+
     const { value: formValues } = await Swal.fire({
       title: "Edit Bucket",
       html: container,
@@ -178,7 +174,6 @@ useEffect(() => {
         return { location, barcode };
       },
       didOpen: () => {
-        // ✅ Inject close button in top-right of title
         const swalTitle = document.querySelector('.swal2-title');
         if (swalTitle) {
           const closeButton = document.createElement('button');
@@ -197,21 +192,19 @@ useEffect(() => {
           closeButton.style.position = 'absolute';
           closeButton.style.right = '10px';
           closeButton.style.top = '10px';
-  
+
           closeButton.addEventListener('click', () => {
             Swal.close();
           });
-  
-          // Ensure popup is relatively positioned
+
           const swalPopup = document.querySelector('.swal2-popup');
           if (swalPopup) {
             swalPopup.style.position = 'relative';
           }
-  
+
           swalTitle.parentNode.appendChild(closeButton);
         }
-  
-        // ✅ Barcode generator logic
+
         document.getElementById('generate-barcode').addEventListener('click', () => {
           const newBarcode = generateBarcode();
           const canvas = document.getElementById('barcode-canvas');
@@ -230,14 +223,14 @@ useEffect(() => {
         });
       }
     });
-  
+
     if (formValues) {
       try {
         await axios.put(`http://127.0.0.1:5000/api/storage/update/${bucket.bucket_id}`, {
           location_id: formValues.location,
           barcode: formValues.barcode,
         });
-  
+
         setBuckets((prev) =>
           prev.map((b) =>
             b.bucket_id === bucket.bucket_id
@@ -245,27 +238,21 @@ useEffect(() => {
               : b
           )
         );
-  
+
         Swal.fire("Updated!", "Bucket details have been updated.", "success");
       } catch (error) {
         Swal.fire("Error!", "Failed to update the bucket.", "error");
       }
     }
   };
-  
-  
-  
-  // Function to generate a random barcode
+
   function generateBarcode() {
-    const prefix = '7'; // Barcode starts with 7
+    const prefix = '7';
     const firstPart = Math.floor(100000 + Math.random() * 900000);
     const secondPart = Math.floor(10000 + Math.random() * 90000);
     return `${prefix}${firstPart}${secondPart}`;
   }
-  
-  
 
-  
   const handleView = async (barcode) => {
     try {
       const response = await axios.get(`http://127.0.0.1:5000/api/storage/${barcode}`);
@@ -273,26 +260,22 @@ useEffect(() => {
 
       const materialId = data.material_id;
 
-    // Initialize materialTitle with a default value
-    let materialTitle = "-";
-    let updatedAt = "-"
+      let materialTitle = "-";
+      let updatedAt = "-"
 
-    // If materialId exists, make a second API call to get material details
-    if (materialId) {
-      try {
-        const materialResponse = await axios.get(`http://127.0.0.1:5000/api/materials/${materialId}`);
-        materialTitle = materialResponse.data.title || "-";
-        updatedAt = materialResponse.data.updated_at || "-"
-      } catch (materialError) {
-        alert(`Error fetching material data: ${materialError}`);
+      if (materialId) {
+        try {
+          const materialResponse = await axios.get(`http://127.0.0.1:5000/api/materials/${materialId}`);
+          materialTitle = materialResponse.data.title || "-";
+          updatedAt = materialResponse.data.updated_at || "-"
+        } catch (materialError) {
+          alert(`Error fetching material data: ${materialError}`);
+        }
       }
-    }
 
-
-
-    Swal.fire({
-      title: `<strong>Bucket Details</strong>`,
-      html: `
+      Swal.fire({
+        title: `<strong>Bucket Details</strong>`,
+        html: `
         <div style="text-align: left;">
           <p><strong>Bucket ID:</strong> ${data.bucket_id}</p>
           <p><strong>Material ID:</strong> ${data.material_id}</p>
@@ -303,14 +286,14 @@ useEffect(() => {
           <p><strong>Updated At:</strong> ${updatedAt || "-"}</p>
         </div>
       `,
-      didOpen: () => {
-        const swalContainer = Swal.getPopup();
-        const closeBtn = document.createElement('button');
-    
-        closeBtn.innerHTML = '&times;'; // × character
-        closeBtn.setAttribute('aria-label', 'Close');
-    
-        closeBtn.style.cssText = `
+        didOpen: () => {
+          const swalContainer = Swal.getPopup();
+          const closeBtn = document.createElement('button');
+
+          closeBtn.innerHTML = '&times;';
+          closeBtn.setAttribute('aria-label', 'Close');
+
+          closeBtn.style.cssText = `
           position: absolute;
           top: 10px;
           right: 15px;
@@ -327,14 +310,14 @@ useEffect(() => {
           justify-content: center;
           z-index: 1001;
         `;
-    
-        closeBtn.onclick = () => Swal.close();
-        swalContainer.appendChild(closeBtn);
-      },
-      confirmButtonText: 'Close',
-      width: 500
-    });
-    
+
+          closeBtn.onclick = () => Swal.close();
+          swalContainer.appendChild(closeBtn);
+        },
+        confirmButtonText: 'Close',
+        width: 500
+      });
+
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -347,12 +330,10 @@ useEffect(() => {
   const handleReset = () => {
     Swal.fire("Reset", "Reset action performed.", "info");
   };
-  
+
   const handleReassign = () => {
-    // Add your reassign logic here, for example, reassigning buckets or materials
     Swal.fire("Reassign", "Reassign action performed.", "info");
   };
-
 
   const groupedByLocation = buckets.reduce((acc, bucket) => {
     const location = bucket.location_id || "Unknown";
@@ -411,7 +392,7 @@ useEffect(() => {
           <div className="flex items-center gap-4 mb-6">
             <Typography sx={{
               fontWeight: "bold",
-               fontSize:"25px"
+              fontSize: "25px"
             }}>{location}</Typography>
           </div>
 
@@ -441,7 +422,7 @@ useEffect(() => {
                       ></svg>
                     </td>
                     <td className="p-3">
-                    <Tooltip title="View">
+                      <Tooltip title="View">
                         <IconButton
                           onClick={() => handleView(bucket.barcode)}
                           sx={{

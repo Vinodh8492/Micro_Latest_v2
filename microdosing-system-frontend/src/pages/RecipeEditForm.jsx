@@ -23,10 +23,9 @@ const RecipeEditForm = () => {
     description: "",
     version: "",
     status: "draft",
-    no_of_materials : ""
+    no_of_materials: ""
   });
-
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -47,7 +46,6 @@ const navigate = useNavigate()
     e.preventDefault();
     const updatedRecipe = { ...recipe };
 
-    // If no_of_materials is an empty string, remove it from the updatedRecipe object
     if (updatedRecipe.no_of_materials === "") {
       delete updatedRecipe.no_of_materials;
     }
@@ -63,12 +61,12 @@ const navigate = useNavigate()
   };
 
   const handleCancel = () => {
-    navigate("/recipes"); // Navigate to the recipe list page or wherever you'd like
+    navigate("/recipes");
   };
 
   return (
     <Paper elevation={3} sx={{ maxWidth: 600, margin: "auto", mt: 4, p: 3 }}>
-     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h6">Edit Formula</Typography>
         <IconButton
           onClick={handleCancel}
@@ -117,7 +115,7 @@ const navigate = useNavigate()
           label="No of Materials"
           name="no_of_materials"
           type="number"
-          value={recipe.no_of_materials }
+          value={recipe.no_of_materials}
           onChange={handleChange}
           margin="normal"
         />
@@ -149,7 +147,7 @@ const navigate = useNavigate()
           variant="outlined"
           onClick={handleCancel}
           fullWidth
-          sx={{ mt: 2, marginTop : '12px' }}
+          sx={{ mt: 2, marginTop: '12px' }}
         >
           Back
         </Button>

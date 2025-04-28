@@ -86,7 +86,6 @@ const Login = () => {
           setError("All fields are required");
           return;
         }
-
         if (password !== confirmPassword) {
           setError("Passwords do not match");
           return;
@@ -112,7 +111,6 @@ const Login = () => {
         });
       } else {
         const { email, password } = formData;
-
         const res = await axios.post(
           "http://127.0.0.1:5000/api/users/login",
           { email, password },

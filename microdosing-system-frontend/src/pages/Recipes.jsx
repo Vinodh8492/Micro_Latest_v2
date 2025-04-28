@@ -44,7 +44,6 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-
 const Recipes = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -102,7 +101,7 @@ const Recipes = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.code || !formData.barcode_id || !formData.version ) {
+    if (!formData.name || !formData.code || !formData.barcode_id || !formData.version) {
       alert("Please fill in all required fields (Name, Code, Barcode ID, Version).");
       return;
     }
@@ -175,8 +174,7 @@ const Recipes = () => {
       },
       didOpen: () => {
         const swal = Swal.getPopup();
-  
-        // Create the close icon
+
         const closeBtn = document.createElement("button");
         closeBtn.innerHTML = "&times;";
         closeBtn.style.position = "absolute";
@@ -194,19 +192,17 @@ const Recipes = () => {
         closeBtn.style.display = "flex";
         closeBtn.style.justifyContent = "center";
         closeBtn.style.alignItems = "center";
-  
-        // Close on click
+
         closeBtn.onclick = () => {
           Swal.close();
         };
-  
         swal.appendChild(closeBtn);
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await axios.delete(`http://127.0.0.1:5000/api/recipes/${recipe_id}`);
-          fetchRecipes(page + 1, rowsPerPage); // Refresh list
+          fetchRecipes(page + 1, rowsPerPage);
           Swal.fire("Deleted!", "The Formula has been deleted.", "success");
         } catch (error) {
           Swal.fire("Error!", "Failed to delete the recipe.", "error");
@@ -214,7 +210,6 @@ const Recipes = () => {
       }
     });
   };
-  
 
   const generateBarcodeId = () => {
     const newBarcode = `RC-${Date.now()}`;
@@ -313,6 +308,7 @@ const Recipes = () => {
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {recipes.map((recipe, index) => (
               <TableRow key={recipe.recipe_id}>
@@ -452,7 +448,6 @@ const Recipes = () => {
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
             <Grid container spacing={3}>
               <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
-
                 <Typography variant="subtitle2" gutterBottom>
                   Formula Name *
                 </Typography>
@@ -466,7 +461,6 @@ const Recipes = () => {
               </Grid>
 
               <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
-
                 <Typography variant="subtitle2" gutterBottom>
                   Formula Code *
                 </Typography>
@@ -480,7 +474,6 @@ const Recipes = () => {
               </Grid>
 
               <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
-
                 <Typography variant="subtitle2" gutterBottom>
                   Version *
                 </Typography>
@@ -492,8 +485,8 @@ const Recipes = () => {
                   required
                 />
               </Grid>
-              <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
 
+              <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
                 <Typography variant="subtitle2" gutterBottom>
                   Status
                 </Typography>
@@ -511,8 +504,7 @@ const Recipes = () => {
                 </FormControl>
               </Grid>
 
-             <Grid sx={{ gridColumn: 'span 12' }}>
-
+              <Grid sx={{ gridColumn: 'span 12' }}>
                 <Typography variant="subtitle2" gutterBottom>
                   Number of Materials
                 </Typography>
@@ -526,8 +518,7 @@ const Recipes = () => {
                 />
               </Grid>
 
-             <Grid sx={{ gridColumn: 'span 12' }}>
-
+              <Grid sx={{ gridColumn: 'span 12' }}>
                 <Typography variant="subtitle2" gutterBottom>
                   Description
                 </Typography>
@@ -543,13 +534,13 @@ const Recipes = () => {
               </Grid>
 
               <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
-
                 <Typography variant="h6" gutterBottom>
                   Barcode Information
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
                   Barcode ID *
                 </Typography>
+
                 <Box sx={{ display: "flex", gap: 2 }}>
                   <TextField
                     fullWidth
@@ -568,7 +559,6 @@ const Recipes = () => {
               </Grid>
 
               <Grid sx={{ marginTop: "40px", gridColumn: { xs: 'span 12', md: 'span 6' } }}>
-
                 <Typography variant="subtitle2" gutterBottom>
                   Barcode Preview
                 </Typography>

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Orders from './Orders';
 import { useDosing } from './DosingContext';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 const ActiveOrders = () => {
   const [order, setOrder] = useState({
@@ -13,8 +12,7 @@ const ActiveOrders = () => {
   });
 
   // initialize once in App.js
-  toast.configure();
-
+  // toast.configure();
 
   const { addDosingRecord } = useDosing();
   const barcodeRefs = useRef({});
@@ -53,7 +51,7 @@ const ActiveOrders = () => {
           }));
           return;
         }
-        
+
         // Fallback to recipe materials if no active material
         const recipeResponse = await axios.get('http://127.0.0.1:5000/api/recipe_materials');
         const recipeMaterials = recipeResponse.data || [];
@@ -79,7 +77,7 @@ const ActiveOrders = () => {
                 margin: materialRes.data?.margin,
               };
             } catch (innerErr) {
-             
+
               alert(`Error fetching names for recipe_id ${mat.recipe_id} or material_id ${mat.material_id} : ${innerErr}`);
               return null;
             }
@@ -134,10 +132,10 @@ const ActiveOrders = () => {
 
   useEffect(() => {
     if (!scanning || !currentMaterial) return;
-  
+
     const expected = currentMaterial?.barcode?.trim();
     setScannedDisplay(expected);
-  
+
     const timeoutId = setTimeout(() => {
       if (!expected) {
         alert(`⚠️ No barcode present for ${currentMaterial.title || currentMaterial.materialName}`);
@@ -146,9 +144,9 @@ const ActiveOrders = () => {
         setScanning(false);
         return;
       }
-  
+
       const isValidFormat = /^[A-Za-z0-9\-_.]{5,30}$/.test(expected);
-  
+
       if (isValidFormat) {
         alert(`✅ Barcode is valid for ${currentMaterial.title || currentMaterial.materialName}`);
         setBarcodeMatched(true);
@@ -156,11 +154,10 @@ const ActiveOrders = () => {
         alert(`❌ Barcode format is invalid for ${currentMaterial.title || currentMaterial.materialName}`);
         setBarcodeMatched(false);
       }
-  
       setScannedDisplay('');
       setScanning(false);
     }, 5000);
-  
+
     return () => clearTimeout(timeoutId);
   }, [scanning, currentMaterial]);
 
@@ -180,7 +177,6 @@ const ActiveOrders = () => {
       alert("Material or set point is missing.");
       return;
     }
-
     const tolerance = 0.5;
     const actualWeight = currentMaterial.actual;
     const minAcceptable = currentMaterial.setPoint * (1 - tolerance);
@@ -206,10 +202,8 @@ const ActiveOrders = () => {
         margin: currentMaterial.margin
       };
 
-      // Save to context
       addDosingRecord(dosingRecord);
 
-      // Update local state
       setOrder(prev => {
         const updatedMaterials = [...prev.materials];
         updatedMaterials[currentIndex] = {
@@ -243,7 +237,6 @@ const ActiveOrders = () => {
       margin: currentMaterial.margin
     };
 
-    // Save to context
     addDosingRecord(bypassRecord);
 
     // Update local state
@@ -276,7 +269,6 @@ const ActiveOrders = () => {
       <Orders />
       <h2 className="text-3xl font-bold mb-6">Active Order: {order.recipe_name}</h2>
 
-      {/* Scan Button */}
       <div className="mb-4 flex gap-4 items-center">
         <button
           onClick={handleScan}
@@ -289,9 +281,7 @@ const ActiveOrders = () => {
           {barcodeMatched ? '✅ Scanned Successfully' : 'Waiting for scan...'}
         </span>
       </div>
- 
 
-      {/* Materials Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full text-left border bg-gray-200">
           <thead className="bg-gray-300 text-sm">
@@ -301,7 +291,7 @@ const ActiveOrders = () => {
               <th className="p-3 border">Barcode</th>
               <th className="p-3 border">Set Point</th>
               <th className="p-3 border">Actual</th>
-              <th className="p-3 border">Err%</th> {/* 👈 Added Header */}
+              <th className="p-3 border">Err%</th>
               <th className="p-3 border">Status</th>
               <th className="p-3 border">Actions</th>
             </tr>

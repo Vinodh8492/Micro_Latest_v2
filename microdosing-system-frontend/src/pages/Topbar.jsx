@@ -10,17 +10,16 @@ const Topbar = () => {
   const { logout } = useAuth();
   const [showLogout, setShowLogout] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [user,setUser]=useState(null);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const toggleLogout = () => setShowLogout((prev) => !prev);
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/users/logout", null, {
+      await axios.post("http://127.0.0.1:5000/api/users/logout", null, {
         withCredentials: true,
       });
-
       logout();
       navigate("/login");
     } catch (error) {
@@ -33,7 +32,7 @@ const Topbar = () => {
       const token = localStorage.getItem("access_token");
 
       try {
-        const response = await fetch("http://localhost:5000/api/users", {
+        const response = await fetch("http://127.0.0.1:5000/api/users", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -85,11 +84,10 @@ const Topbar = () => {
 
   return (
     <div
-      className={`w-full h-16 flex items-center justify-between px-4 shadow-md relative transition-all duration-300 ${
-        theme === "dark"
-          ? "bg-[#0f1c2f] text-[#e0f7ff] shadow-neon border-b border-cyan-400"
-          : "bg-[#D4D6D9] text-gray-800"
-      }`}
+      className={`w-full h-16 flex items-center justify-between px-4 shadow-md relative transition-all duration-300 ${theme === "dark"
+        ? "bg-[#0f1c2f] text-[#e0f7ff] shadow-neon border-b border-cyan-400"
+        : "bg-[#D4D6D9] text-gray-800"
+        }`}
     >
       <div className="flex items-center gap-4" />
 

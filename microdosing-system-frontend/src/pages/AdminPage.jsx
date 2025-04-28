@@ -44,7 +44,6 @@ const AdminPage = () => {
 
   const handleUpload = async () => {
     if (!logo) return;
-
     const formData = new FormData();
     formData.append('logo', logo);
 
@@ -70,7 +69,6 @@ const AdminPage = () => {
       <Card sx={{ p: 4, boxShadow: 4 }}>
         <CardContent>
 
-          {/* Admin Panel Header */}
           <Stack direction="row" spacing={2} alignItems="center" mb={2}>
             <Avatar>
               <AdminPanelSettings />
@@ -80,7 +78,6 @@ const AdminPage = () => {
             </Typography>
           </Stack>
 
-          {/* Upload Logo Section */}
           <Box mb={2}>
             <input
               accept="image/*"
@@ -134,7 +131,6 @@ const AdminPage = () => {
             Upload Logo
           </Button>
 
-
           {uploadedLogo && (
             <Box>
               <Typography variant="subtitle1" fontWeight={600}>
@@ -151,14 +147,12 @@ const AdminPage = () => {
             </Box>
           )}
 
-          {/* Divider Section */}
           <Box sx={{ my: 4 }}>
             <Typography variant="h6" fontWeight={600}>
               Email Configuration
             </Typography>
           </Box>
 
-          {/* SMTP + Scheduler in a row */}
           <Box
             sx={{
               display: 'flex',

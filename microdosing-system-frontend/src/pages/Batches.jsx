@@ -52,8 +52,6 @@ const Batches = () => {
     Released: { backgroundColor: "#bbf7d0", color: "#166534" },
   };
 
-
-
   const fetchUserRole = () => {
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
@@ -151,38 +149,32 @@ const Batches = () => {
         <div style="text-align: left; width: 100%;">
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Batch Number</label>
-            <input id="batch_number" value="${
-              batch.batch_number || ""
-            }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+            <input id="batch_number" value="${batch.batch_number || ""
+        }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
           </div>
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Order ID</label>
-            <input id="order_id" value="${
-              batch.order_id || ""
-            }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+            <input id="order_id" value="${batch.order_id || ""
+        }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
           </div>
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Status</label>
             <select id="status" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
-              <option value="Unreleased" ${
-                batch.status === "Unreleased" ? "selected" : ""
-              }>Unreleased</option>
-              <option value="Released" ${
-                batch.status === "Released" ? "selected" : ""
-              }>Released</option>
+              <option value="Unreleased" ${batch.status === "Unreleased" ? "selected" : ""
+        }>Unreleased</option>
+              <option value="Released" ${batch.status === "Released" ? "selected" : ""
+        }>Released</option>
             </select>
           </div>
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Operator ID</label>
-            <input id="operator_id" value="${
-              batch.operator_id || ""
-            }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+            <input id="operator_id" value="${batch.operator_id || ""
+        }" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
           </div>
           <div style="margin-bottom: 1rem;">
             <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Notes</label>
-            <textarea id="notes" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;">${
-              batch.notes || ""
-            }</textarea>
+            <textarea id="notes" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;">${batch.notes || ""
+        }</textarea>
           </div>
         </div>
       `,

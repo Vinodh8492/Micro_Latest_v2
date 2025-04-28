@@ -3,20 +3,19 @@ import { useNavigate } from "react-router-dom";
 import JsBarcode from "jsbarcode";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  Button,
-  Paper,
-  FormHelperText,
-  IconButton,
-} from "@mui/material";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+
 import CloseIcon from "@mui/icons-material/Close";
 
 const MaterialForm = () => {

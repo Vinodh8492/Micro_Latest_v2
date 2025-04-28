@@ -92,6 +92,7 @@ export default function Sidebar() {
           >
             <img
               src={isDarkMode ? LogoLight : LogoDark}
+              loading="lazy"
               alt="Hercules Logo"
               className={`transition-all duration-300 ${
                 isOpen ? "h-22" : "h-10"

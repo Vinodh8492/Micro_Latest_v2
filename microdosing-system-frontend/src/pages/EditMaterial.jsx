@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  IconButton,
-  Autocomplete,
-  Stack,
-} from "@mui/material";
+// Importing only the necessary components from @mui/material
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+
 import CloseIcon from "@mui/icons-material/Close";
 
 const EditMaterial = () => {

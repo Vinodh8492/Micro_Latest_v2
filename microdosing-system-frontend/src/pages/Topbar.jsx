@@ -104,17 +104,25 @@ const Topbar = () => {
         </div>
 
         <img
-          src={companyLogo}
-          alt="Company Logo"
-          className="h-10 cursor-pointer transition-all duration-200 hover:opacity-80"
-          onClick={toggleLogout}
-        />
-        <img
-          src={chicken}
-          alt="chicken"
-          className="h-25 w-25 object-contain cursor-pointer transition-all duration-200 hover:opacity-80"
-          onClick={toggleLogout}
-        />
+  src={companyLogo}
+  alt="Company Logo"
+  width="40"   // Explicit width (use your desired size)
+  height="40"  // Explicit height (use your desired size)
+  className="h-auto w-auto max-h-10 sm:max-h-12 md:max-h-16 lg:max-h-20 cursor-pointer transition-all duration-200 hover:opacity-80"
+  onClick={toggleLogout}
+  loading="lazy"
+/>
+
+<img
+  src={chicken}
+  alt="chicken"
+  width="100"  // Explicit width (use your desired size)
+  height="100" // Explicit height (use your desired size)
+  className="h-auto w-auto max-h-25 max-w-25 sm:max-h-30 md:max-h-35 lg:max-h-40 object-contain cursor-pointer transition-all duration-200 hover:opacity-80"
+  onClick={toggleLogout}
+  loading="lazy"
+/>
+
 
         {showLogout && (
           <div className="absolute top-14 right-2 bg-white border shadow-lg rounded-lg p-4 z-50 max-w-[200px]">

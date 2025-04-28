@@ -15,7 +15,11 @@ import {
 } from 'chart.js';
 import { Bar, Doughnut, Line, Radar } from 'react-chartjs-2';
 import { Package, ClipboardList, Activity, CheckCircle } from 'lucide-react';
-import { Card, CardContent, Typography, CircularProgress, Box } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import ThemeDropdown from '../components/ThemeDropdown';
 import { useTheme } from '../context/ThemeContext';
 import { generateShades, getContrastColor } from '../utils/colorUtils';

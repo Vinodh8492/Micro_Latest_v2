@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Typography, Button, Stack, TextField, Switch, FormControlLabel,
-  FormGroup, Checkbox, Paper, Divider
-} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+
 import { Settings, Email } from '@mui/icons-material';
 import axios from 'axios';
 
